@@ -1,11 +1,25 @@
 <h1>Message Board</h1>
 
-<h1>メッセージ一覧</h1>
-<% @messages.each do |message| %>
-  名前:<%= message.name %>
-  内容:<%= message.body %>
-  <br>
+<% if notice %>
+    <div class="alert-info">
+        <%=notice %>
+    </div>
 <% end %>
+
+<div class ="panel-default">
+    <div class ="panel-heading">
+        <h1>メッセージ一覧</h1>
+    </div>
+</div>
+
+<div class="panel-body">
+    <% @messages.each do |message| %>
+        <span class="label label-success"><%= message.name %></span>
+        <%=message.body %>
+        <%= link_to "削除" , message , method: :delete, data: { confirm: '削除してもよろしいですか？' } %>
+        <br>
+    <% end %>
+</div>
 
 
 <%= form_for(@message) do |f| %>
@@ -13,5 +27,5 @@
     <%=f.text_field :name %>
     内容:
     <%=f.text_field :body %>
-    <%=f.submit %>
+    <%=f.submit class: "btn btn-sm btn-default" %>
 <% end %>
